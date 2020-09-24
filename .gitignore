@@ -1,2 +1,5 @@
 encryption.pyc
 .gitcred_salt
+._salt
+.pass.txt
+_encrypted
