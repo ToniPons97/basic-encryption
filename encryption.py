@@ -52,7 +52,6 @@ def decrypt(filepath):
     try:
         f = Fernet(key)
         #print(f.decrypt(file))
-        print("File copied succesfuly to clipboard!\nBye bye")
         pyperclip.copy(f.decrypt(file))
 
     except InvalidToken:
