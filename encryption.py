@@ -4,6 +4,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.fernet import InvalidToken
+import pyperclip
 
 
 def encrypt(filepath):
@@ -50,7 +51,10 @@ def decrypt(filepath):
 
     try:
         f = Fernet(key)
-        print(f.decrypt(file))
+        #print(f.decrypt(file))
+        print("File copied succesfuly to clipboard!\nBye bye")
+        pyperclip.copy(f.decrypt(file))
+
     except InvalidToken:
         print("Found 0 files encrypted with that password.")
     
