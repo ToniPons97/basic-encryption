@@ -20,5 +20,6 @@ database (I'm thinking SQLite).
 To decrypt it:
 	./main.py -d file.txt
 It will ask you for the password. After entering the password you'll have the
-original message copied to your clipboard, so if you do CTRL + V 
-(or COMMAND + V for mac) you'll see that the message is copied.
+original message copied to your clipboard, so if you do COMMAND + V (or CTRL + V) you'll see that the message is copied.
+
+I'm really
