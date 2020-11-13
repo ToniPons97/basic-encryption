@@ -1,6 +1,6 @@
 #basic-encryption
 
-This is a simple password manager that I created to help me manage a bunch of trivial passwords and also experiment with encryption algorithms at the same time.
+This is a simple password manager that I created to help me manage a bunch of trivial passwords.
 
 I tried to make the utility as simple as possible. It has only two options: 
 encrypt file and decrypt file. When you encrypt a file the salt is saved as a 
@@ -21,5 +21,3 @@ To decrypt it:
 	./main.py -d file.txt
 It will ask you for the password. After entering the password you'll have the
 original message copied to your clipboard, so if you do COMMAND + V (or CTRL + V) you'll see that the message is copied.
-
-I'm really
