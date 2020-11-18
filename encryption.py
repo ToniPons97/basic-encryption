@@ -31,8 +31,6 @@ def encrypt(filepath):
     else:
         print("Passwords don't match")
 
-    #print("plaintext: ", f.decrypt(token))
-
 def decrypt(filepath):
     file = open(filepath, "r").read()
     password = getpass.getpass("Password: ")
@@ -52,7 +50,8 @@ def decrypt(filepath):
     try:
         f = Fernet(key)
         #print(f.decrypt(file))
-        pyperclip.copy(f.decrypt(file))
+        #pyperclip.copy(f.decrypt(file))
+        return f.decrypt(file)
 
     except InvalidToken:
         print("Found 0 files encrypted with that password.")
@@ -65,3 +64,14 @@ def save_salt(salt, file):
 def get_salt(filename):
     salt_filename = "." + filename.split("_")[0] + "_salt"
     return open(salt_filename, "rb").read()
+
+def handle_ouput(plaintext, str_command):
+    str_command = str(str_command).lower()
+
+    if str_command == "copy":
+        pyperclip.copy(plaintext)
+    elif str_command == "print":
+        print(plaintext)
+    elif str_command == "save":
+        file_name = str(input("Input file name: "))
+        print("Should save as " + file_name)
