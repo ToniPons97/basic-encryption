@@ -1,10 +1,9 @@
-import base64, os, getpass
+import base64, os, getpass, pyperclip
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.fernet import InvalidToken
-import pyperclip
 
 
 def encrypt(filepath):
@@ -29,7 +28,7 @@ def encrypt(filepath):
         token = f.encrypt(plaintext)
         open(filepath.split(".")[0] + "_encrypted", "wb").write(token)
     else:
-        print("Passwords don't match")
+        print "Passwords don't match"
 
 def decrypt(filepath):
     file = open(filepath, "r").read()
@@ -49,12 +48,11 @@ def decrypt(filepath):
 
     try:
         f = Fernet(key)
-        #print(f.decrypt(file))
-        #pyperclip.copy(f.decrypt(file))
         return f.decrypt(file)
 
     except InvalidToken:
         print("Found 0 files encrypted with that password.")
+        return ""
     
 def save_salt(salt, file):
     filename = "." + file.split(".")[0] + "_salt"
@@ -66,12 +64,17 @@ def get_salt(filename):
     return open(salt_filename, "rb").read()
 
 def handle_ouput(plaintext, str_command):
-    str_command = str(str_command).lower()
+    if plaintext != "":
 
-    if str_command == "copy":
-        pyperclip.copy(plaintext)
-    elif str_command == "print":
-        print(plaintext)
-    elif str_command == "save":
-        file_name = str(input("Input file name: "))
-        print("Should save as " + file_name)
+        str_command = str(str_command).lower()
+
+        if str_command == "copy":
+            pyperclip.copy(plaintext)
+        elif str_command == "print":
+            print plaintext
+        elif str_command == "save":
+            file_name = input("Input file name: ")
+            open(file_name, "w").write(plaintext)
+            print "Written to " + file_name + " successfuly."
+    else:
+        return
