@@ -12,7 +12,6 @@ def receiveConfig():
 
 def main():
     config = receiveConfig()
-
     if config.encrypt:
         encrypt(config.encrypt)
     elif config.decrypt:

@@ -30,13 +30,17 @@ def encrypt(filepath):
 
         option = raw_input("File encrypted successfully.\nDo you wish to delete " + filepath + "? ").lower()
 
-        if (option == "yes" or option == "y") or (option == "no" or option == "n"):
-            print("Deleting " + filepath)
-            os.system("rm ./" + filepath)
-            print("Done!")
-        else:
-            print("Ok bye!")
-
+        r_u_done = 0
+        while r_u_done <= 3:
+            if (option == "yes" or option == "y") or (option == "no" or option == "n"):
+                print("Deleting " + filepath)
+                os.system("rm ./" + filepath)
+                print("Done!")
+                r_u_done = 4
+            else:
+                print("Ok bye!")
+                r_u_done = 4
+            r_u_done += 1
     else:
         print("Passwords don't match")
 
