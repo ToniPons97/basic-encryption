@@ -27,8 +27,18 @@ def encrypt(filepath):
         f = Fernet(key)
         token = f.encrypt(plaintext)
         open(filepath.split(".")[0] + "_encrypted", "wb").write(token)
+
+        option = raw_input("File encrypted successfully.\nDo you wish to delete " + filepath + "? ").lower()
+
+        if (option == "yes" or option == "y") or (option == "no" or option == "n"):
+            print("Deleting " + filepath)
+            os.system("rm ./" + filepath)
+            print("Done!")
+        else:
+            print("Ok bye!")
+
     else:
-        print "Passwords don't match"
+        print("Passwords don't match")
 
 def decrypt(filepath):
     file = open(filepath, "r").read()
@@ -71,10 +81,10 @@ def handle_ouput(plaintext, str_command):
         if str_command == "copy":
             pyperclip.copy(plaintext)
         elif str_command == "print":
-            print plaintext
+            print(plaintext)
         elif str_command == "save":
             file_name = input("Input file name: ")
             open(file_name, "w").write(plaintext)
-            print "Written to " + file_name + " successfuly."
+            print("Written to " + file_name + " successfuly.")
     else:
         return
