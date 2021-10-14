@@ -1,5 +1,4 @@
+.vscode
+__pycache__
 encryption.pyc
-.gitcred_salt
-._salt
-.pass.txt
-_encrypted
+.DS_STORE
