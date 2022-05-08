@@ -5,7 +5,6 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.fernet import InvalidToken
 
-
 def encrypt(filepath):
     password1 = getpass.getpass("New password: ")
     password2 = getpass.getpass("Repeat new password: ")
@@ -23,7 +22,7 @@ def encrypt(filepath):
             )
         plaintext = open(filepath, "r").read().encode()
 
-        key = base64.urlsafe_b64encode(kdf.derive(password1))
+        key = base64.urlsafe_b64encode(kdf.derive(bytes(password1, 'utf-8')))
         f = Fernet(key)
         token = f.encrypt(plaintext)
         open(filepath.split(".")[0] + "_encrypted", "wb").write(token)
@@ -31,11 +30,10 @@ def encrypt(filepath):
 
         r_u_done = 0
         while r_u_done < 3:
-            option = raw_input("File encrypted successfully.\nDo you wish to delete " + filepath + "? ").lower()
-            
-            if (option == "yes" or option == "y") or (option == "no" or option == "n"):
+            option = input("File encrypted successfully.\nDo you wish to delete " + filepath + "? ").lower()
+            if (option == "yes" or option == "y"):
                 print("Deleting " + filepath)
-                os.system("rm ./" + filepath)
+                os.remove(filepath)
                 print("Done!")
                 r_u_done = 3
             else:
@@ -59,11 +57,11 @@ def decrypt(filepath):
     iterations=10000,
     backend=default_backend()
     )
-    key = base64.urlsafe_b64encode(kdf.derive(password))
+    key = base64.urlsafe_b64encode(kdf.derive(bytes(password, 'utf-8')))
 
     try:
         f = Fernet(key)
-        return f.decrypt(file)
+        return f.decrypt(bytes(file, 'utf-8'))
 
     except InvalidToken:
         print("Found 0 files encrypted with that password.")
@@ -82,11 +80,11 @@ def handle_ouput(plaintext, str_command):
     if plaintext != "":
 
         str_command = str(str_command).lower()
-
         if str_command == "copy":
             pyperclip.copy(plaintext)
         elif str_command == "print":
-            print(plaintext)
+            decoded_data = ''.join(map(chr, plaintext))
+            print(repr(decoded_data))
         elif str_command == "save":
             file_name = input("Input file name: ")
             open(file_name, "w").write(plaintext)
