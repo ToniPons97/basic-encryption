@@ -79,15 +79,17 @@ def get_salt(filename):
 def handle_ouput(plaintext, str_command):
     if plaintext != "":
 
-        str_command = str(str_command).lower()
         if str_command == "copy":
-            pyperclip.copy(plaintext)
+            pyperclip.copy(decode_data(plaintext))
         elif str_command == "print":
-            decoded_data = ''.join(map(chr, plaintext))
-            print(repr(decoded_data))
+            print(decode_data(plaintext))
         elif str_command == "save":
             file_name = input("Input file name: ")
-            open(file_name, "w").write(plaintext)
+            open(file_name, "wb").write(plaintext)
             print("Written to " + file_name + " successfuly.")
     else:
         return
+
+def decode_data(plaintext):
+    decoded_data = ''.join(map(chr, plaintext))
+    return repr(decoded_data)
